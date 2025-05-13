@@ -1,6 +1,7 @@
 
 heap
 heap.dSYM
+heap.s
 
 # OS specific
 .DS_Store

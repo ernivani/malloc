@@ -129,7 +129,7 @@ void *heap_alloc(size_t size)
 {
   if (size > 0) {
     tmp_chunk.count = 0;
-    
+
     chunk_list_merge(&tmp_chunk, &freed_chunks);
     freed_chunks = tmp_chunk;
 
@@ -178,19 +178,27 @@ void *ptrs[N] = {0};
 
 int main(void)
 {
-  for (int i = 0; i < 10; i++) {
-    void *p = heap_alloc(i);
-    (void) p;
-    if (i%2 == 0) {
-      heap_free(p);
-    }
-  }
+  // for (int i = 0; i < 10; i++) {
+  //   void *ptrs = heap_alloc(i);
+    // if (i%2 == 0) {
+      // heap_free(ptrs);
+    // }
+  // }
 
-  heap_alloc(420);
+  // heap_alloc(420);
+  //
+  // for (int i = 1; i <= 4; ++i ){
+  //   heap_alloc(i);
+  // }
+
   
-  for (int i = 1; i <= 4; ++i ){
-    heap_alloc(i);
-  }
+  long long *ptr;
+  ptr = heap_alloc( sizeof(*ptr)); 
+  
+ // if (ptr != NULL) {
+ //    *(ptr + 5) = 480;
+ //    printf("Value of the 6th integer is %d",*(ptr + 5));
+ //  }
 
   chunk_list_dump(&alloced_chunk);
 
