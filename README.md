@@ -11,6 +11,7 @@ This project implements a basic heap memory allocator with the following feature
 - Chunk-based memory management
 - Allocation and deallocation functions
 - Memory chunk tracking
+- Automatic memory coalescing
 
 ## Functions
 
@@ -21,10 +22,11 @@ This project implements a basic heap memory allocator with the following feature
 ## Building and Running
 
 ```bash
-# Compile the project
-gcc -Wall -Wextra -o heap main.c
+# Build  and run the project
+make all
 
-# Run the executable
+# OR
+gcc -Wall -Wextra -o heap main.c
 ./heap
 ```
 
@@ -35,21 +37,29 @@ The allocator maintains two chunk lists:
 - `freed_chunks`: Tracks available memory regions
 
 When memory is allocated:
-1. The allocator searches for a free chunk large enough
-2. It splits the chunk if necessary
-3. The allocated portion is moved to the allocated list
-4. Any remainder stays in the free list
+1. The allocator first merges adjacent free chunks to reduce fragmentation
+2. Searches for a free chunk large enough using first-fit strategy
+3. Splits the chunk if necessary
+4. The allocated portion is moved to the allocated list
+5. Any remainder stays in the free list
 
 When memory is freed:
 1. The chunk is moved from the allocated list to the free list
-2. (Future improvement: Coalescing adjacent free chunks)
+2. Adjacent free chunks are automatically coalesced during the next allocation
+
+## Implementation Details
+
+- Chunks are kept sorted by memory address to facilitate coalescing
+- The `chunk_list_merge` function handles both sorting and coalescing of chunks
+- Time complexity for allocation is O(n) where n is the number of free chunks
+- Time complexity for deallocation is O(n) where n is the number of allocated chunks
 
 ## Future Improvements
 
 - Implement `heap_collect()` for garbage collection
-- Add memory coalescing to reduce fragmentation
-- Implement more sophisticated allocation strategies
+- Implement more sophisticated allocation strategies (best-fit, worst-fit)
 - Add memory alignment support
+- Optimize chunk list operations for better performance
 
 ## License
 
