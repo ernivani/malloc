@@ -60,7 +60,3 @@ When memory is freed:
 - Implement more sophisticated allocation strategies (best-fit, worst-fit)
 - Add memory alignment support
 - Optimize chunk list operations for better performance
-
-## License
-
-[Your license information here] 
